@@ -18,8 +18,13 @@ const icons = [
   },
 ];
 
-export default function BottomNavigation() {
+export default function BottomNavigation({ navigation }: any) {
   NavigationBar.setBackgroundColorAsync("#212A31");
+
+  function addNoteHandler() {
+    navigation.navigate("Note");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -39,7 +44,7 @@ export default function BottomNavigation() {
         icon="plus-circle"
         iconColor="white"
         size={80}
-        onPress={() => console.log("Pressed")}
+        onPress={addNoteHandler}
       />
     </View>
   );

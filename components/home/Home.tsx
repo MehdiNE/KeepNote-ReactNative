@@ -23,7 +23,7 @@ export default function Home({ navigation }: any) {
         <Text>footer</Text>
       </ScrollView>
       <View>
-        <BottomNavigation />
+        <BottomNavigation navigation={navigation} />
       </View>
     </View>
   );
