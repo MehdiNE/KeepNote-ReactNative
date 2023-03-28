@@ -1,19 +1,32 @@
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Appbar, IconButton, Tooltip } from "react-native-paper";
 
+import * as NavigationBar from "expo-navigation-bar";
+import NoteBottomActions from "./NoteBottomActions";
+
 export default function Note() {
+  const [selectedColor, setSelectedColor] = useState<string>("#181C1F");
+
   const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync(selectedColor);
+
+    return () => {
+      NavigationBar.setBackgroundColorAsync("#212A31");
+    };
+  }, [selectedColor]);
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: "#181C1F",
+        backgroundColor: selectedColor,
       }}
     >
-      <Appbar.Header style={styles.appBar}>
+      <Appbar.Header style={{ backgroundColor: selectedColor }}>
         <Tooltip title="Navigation up">
           <IconButton
             icon={"keyboard-backspace"}
@@ -41,7 +54,6 @@ export default function Note() {
           />
         </Tooltip>
       </Appbar.Header>
-
       <View style={styles.container}>
         <TextInput
           placeholder="Title"
@@ -57,37 +69,15 @@ export default function Note() {
         />
       </View>
 
-      <View style={styles.bottomActions}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <IconButton
-            icon="plus-box-outline"
-            iconColor="white"
-            onPress={() => {}}
-          />
-          <IconButton
-            icon="format-color-highlight"
-            iconColor="white"
-            onPress={() => {}}
-          />
-          <Text style={{ marginLeft: 40, color: "white" }}>Edited 14:00</Text>
-        </View>
-
-        <IconButton icon="dots-vertical" iconColor="white" onPress={() => {}} />
-      </View>
+      <NoteBottomActions
+        setSelectedColor={setSelectedColor}
+        selectedColor={selectedColor}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  appBar: {
-    backgroundColor: "#181C1F",
-  },
   container: {
     paddingHorizontal: 20,
   },
@@ -97,15 +87,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   noteInput: { color: "white", height: "80%", textAlignVertical: "top" },
-  bottomActions: {
-    position: "absolute",
-    bottom: 0,
-    display: "flex",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    color: "white",
-  },
 });

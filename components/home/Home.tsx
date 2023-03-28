@@ -1,11 +1,16 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import BottomNavigation from "../BottomNavigation";
 import Header from "../Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as NavigationBar from "expo-navigation-bar";
 
 export default function Home({ navigation }: any) {
   const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    NavigationBar.setBackgroundColorAsync("#212A31");
+  }, []);
 
   return (
     <View

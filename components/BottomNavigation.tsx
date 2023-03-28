@@ -1,7 +1,6 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import { Button, IconButton } from "react-native-paper";
-import * as NavigationBar from "expo-navigation-bar";
+import { IconButton } from "react-native-paper";
 
 const icons = [
   {
@@ -19,8 +18,6 @@ const icons = [
 ];
 
 export default function BottomNavigation({ navigation }: any) {
-  NavigationBar.setBackgroundColorAsync("#212A31");
-
   function addNoteHandler() {
     navigation.navigate("Note");
   }
