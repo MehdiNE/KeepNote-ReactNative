@@ -1,13 +1,20 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Appbar, IconButton, Tooltip } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
 
 import * as NavigationBar from "expo-navigation-bar";
 import NoteBottomActions from "./NoteBottomActions";
+import { getAllNotes } from "../../API/ApiConst";
+import NoteTopActions from "./NoteTopActions";
 
 export default function Note() {
   const [selectedColor, setSelectedColor] = useState<string>("#181C1F");
+
+  const { data } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getAllNotes,
+  });
 
   const insets = useSafeAreaInsets();
 
@@ -26,34 +33,12 @@ export default function Note() {
         backgroundColor: selectedColor,
       }}
     >
-      <Appbar.Header style={{ backgroundColor: selectedColor }}>
-        <Tooltip title="Navigation up">
-          <IconButton
-            icon={"keyboard-backspace"}
-            iconColor="white"
-            onPress={() => {}}
-          />
-        </Tooltip>
+      <NoteTopActions selectedColor={selectedColor} />
 
-        <Appbar.Content title="" />
-        <Tooltip title="Pin">
-          <IconButton icon="pin-outline" iconColor="white" onPress={() => {}} />
-        </Tooltip>
-        <Tooltip title="Reminder">
-          <IconButton
-            icon="bell-plus-outline"
-            iconColor="white"
-            onPress={() => {}}
-          />
-        </Tooltip>
-        <Tooltip title="Archive">
-          <IconButton
-            icon="archive-arrow-down-outline"
-            iconColor="white"
-            onPress={() => {}}
-          />
-        </Tooltip>
-      </Appbar.Header>
+      {data?.data?.data?.notes?.map((el: any) => (
+        <Text>{el.title}</Text>
+      ))}
+
       <View style={styles.container}>
         <TextInput
           placeholder="Title"

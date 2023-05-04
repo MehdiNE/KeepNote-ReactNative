@@ -16,6 +16,9 @@ import Reminders from "./components/reminders/Reminders";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Note from "./components/notes/Note";
 import AppDrawer from "./AppDrawer";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const Drawer = createDrawerNavigator();
 
@@ -24,17 +27,19 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <SafeAreaProvider>
-        <PaperProvider>
-          <StatusBar style="light" />
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <PaperProvider>
+            <StatusBar style="light" />
 
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={AppDrawer} />
-            <Stack.Screen name="Note" component={Note} />
-            <Stack.Screen name="Reminders" component={Reminders} />
-          </Stack.Navigator>
-        </PaperProvider>
-      </SafeAreaProvider>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Home" component={AppDrawer} />
+              <Stack.Screen name="Note" component={Note} />
+              <Stack.Screen name="Reminders" component={Reminders} />
+            </Stack.Navigator>
+          </PaperProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }

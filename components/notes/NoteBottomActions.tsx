@@ -140,11 +140,10 @@ const NoteBottomActions = ({ setSelectedColor, selectedColor }: Props) => {
               style={styles.colorsContainer}
             >
               {colors.map((item, index) => (
-                <View>
+                <View key={index}>
                   {index === 0 ? (
                     <TouchableOpacity
                       onPress={() => selectColorHandler(item.colorCode)}
-                      key={index}
                       style={[
                         styles.colorItem,
                         {
